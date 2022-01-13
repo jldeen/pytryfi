@@ -19,7 +19,7 @@ pkg = find_packages("pytryfi")
 print(pkg)
 
 setup(
-    name="jldeenpytryfi", # Replace with your own username
+    name="pyficollar", # Replace with your own username
     version=PYTRYFI_VERSION,
     author="Steve Babcock",
     author_email="steve.w.babcock@gmail.com",
