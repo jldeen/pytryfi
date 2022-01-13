@@ -1,7 +1,9 @@
 from pytryfi.const import *
 from pytryfi.exceptions import *
+
 import requests
 import logging
+
 from sentry_sdk import capture_exception
 
 LOGGER = logging.getLogger(__name__)
@@ -23,9 +25,19 @@ def getPetList(sessionId):
             + FRAGMENT_BASE_DETAILS + FRAGMENT_POSITION_COORDINATES + FRAGMENT_BREED_DETAILS \
             + FRAGMENT_PHOTO_DETAILS + FRAGMENT_DEVICE_DETAILS + FRAGMENT_LED_DETAILS + FRAGMENT_OPERATIONAL_DETAILS \
             + FRAGMENT_CONNECTION_STATE_DETAILS
+
         response = query(sessionId, qString)
         LOGGER.debug(f"getPetList: {response}")
-        return response['data']['currentUser']['userHouseholds'][1]['household']['pets']
+
+        petList = response['data']['currentUser']['userHouseholds'][0]['household']['pets']
+        LOGGER.debug(f"Pets Found in Index 0: {petList}")
+
+        if not 'pets' in petList or len(petList['pets']) == 0:
+            petList = response['data']['currentUser']['userHouseholds'][1]['household']['pets']
+            LOGGER.debug(f"Pets Found in Index 1: {petList}")
+
+        return petList
+        
     except Exception as e:
         LOGGER.error("Error performing query: " + e)
         capture_exception(e)
@@ -39,7 +51,16 @@ def getBaseList(sessionId):
             + FRAGMENT_CONNECTION_STATE_DETAILS
         response = query(sessionId, qString)
         LOGGER.debug(f"getBaseList: {response}")
-        return response['data']['currentUser']['userHouseholds'][1]['household']['bases']
+
+        baseList = response['data']['currentUser']['userHouseholds'][0]['household']['bases']
+        LOGGER.debug(f"Bases Found in Index 0: {baseList}")
+
+        if not 'bases' in baseList or len(baseList['bases']) == 0:
+            baseList = response['data']['currentUser']['userHouseholds'][1]['household']['bases']
+            LOGGER.debug(f"Bases Found in Index 1: {baseList}")
+
+        return baseList
+
     except Exception as e:
         LOGGER.error("Error performing query: " + e)
         capture_exception(e)
