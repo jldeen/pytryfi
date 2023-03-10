@@ -1,10 +1,10 @@
 SENTRY_URL = "https://c7618923f758480ca2af05a21123f855@o580516.ingest.sentry.io/5735605"
 
-PYTRYFI_VERSION = "0.0.18"
+PYTRYFI_VERSION = "0.0.19"
 
-API_HOST_URL_BASE   = "https://api.tryfi.com"
-API_GRAPHQL         = "/graphql"
-API_LOGIN           = "/auth/login"
+API_HOST_URL_BASE = "https://api.tryfi.com"
+API_GRAPHQL = "/graphql"
+API_LOGIN = "/auth/login"
 
 PET_MODE_NORMAL = "NORMAL"
 PET_MODE_LOST = "LOST_DOG"
@@ -15,12 +15,30 @@ PET_ACTIVITY_REST = "Rest"
 
 VAR_PET_ID = "__PET_ID__"
 
-QUERY_CURRENT_USER  = "query {\n  currentUser {\n    ...UserDetails\n  }\n}\n"
-QUERY_CURRENT_USER_FULL_DETAIL  = "query {\n  currentUser {\n    ...UserFullDetails\n  }\n}\n"
-QUERY_PET_CURRENT_LOCATION = "query {\n\n  pet (id: \""+VAR_PET_ID+"\") {\n    ongoingActivity {\n      __typename\n      ...OngoingActivityDetails\n    }\n  }\n}\n"
-QUERY_PET_ACTIVITY = "query {\n\n  pet (id: \""+VAR_PET_ID+"\") {\n   \n    dailyStat: currentActivitySummary (period: DAILY) {\n      ...ActivitySummaryDetails\n    }\n    weeklyStat: currentActivitySummary (period: WEEKLY) {\n      ...ActivitySummaryDetails\n    }\n    monthlyStat: currentActivitySummary (period: MONTHLY) {\n      ...ActivitySummaryDetails\n    }\n  }\n}\n"
-QUERY_PET_REST = "query {\n  pet (id: \""+VAR_PET_ID+"\") {\n	dailyStat: restSummaryFeed(cursor: null, period: DAILY, limit: 1) {\n      __typename\n      restSummaries {\n        __typename\n        ...RestSummaryDetails\n      }\n    }\n	weeklyStat: restSummaryFeed(cursor: null, period: WEEKLY, limit: 1) {\n      __typename\n      restSummaries {\n        __typename\n        ...RestSummaryDetails\n      }\n    }\n	monthlyStat: restSummaryFeed(cursor: null, period: MONTHLY, limit: 1) {\n      __typename\n      restSummaries {\n        __typename\n        ...RestSummaryDetails\n      }\n    }\n  }\n}"
-QUERY_PET_DEVICE_DETAILS = "query {\n  pet (id: \""+VAR_PET_ID+"\") {\n    __typename\n    ...PetProfile\n  }\n}\n"
+QUERY_CURRENT_USER = "query {\n  currentUser {\n    ...UserDetails\n  }\n}\n"
+QUERY_CURRENT_USER_FULL_DETAIL = (
+    "query {\n  currentUser {\n    ...UserFullDetails\n  }\n}\n"
+)
+QUERY_PET_CURRENT_LOCATION = (
+    'query {\n\n  pet (id: "'
+    + VAR_PET_ID
+    + '") {\n    ongoingActivity {\n      __typename\n      ...OngoingActivityDetails\n    }\n  }\n}\n'
+)
+QUERY_PET_ACTIVITY = (
+    'query {\n\n  pet (id: "'
+    + VAR_PET_ID
+    + '") {\n   \n    dailyStat: currentActivitySummary (period: DAILY) {\n      ...ActivitySummaryDetails\n    }\n    weeklyStat: currentActivitySummary (period: WEEKLY) {\n      ...ActivitySummaryDetails\n    }\n    monthlyStat: currentActivitySummary (period: MONTHLY) {\n      ...ActivitySummaryDetails\n    }\n  }\n}\n'
+)
+QUERY_PET_REST = (
+    'query {\n  pet (id: "'
+    + VAR_PET_ID
+    + '") {\n	dailyStat: restSummaryFeed(cursor: null, period: DAILY, limit: 1) {\n      __typename\n      restSummaries {\n        __typename\n        ...RestSummaryDetails\n      }\n    }\n	weeklyStat: restSummaryFeed(cursor: null, period: WEEKLY, limit: 1) {\n      __typename\n      restSummaries {\n        __typename\n        ...RestSummaryDetails\n      }\n    }\n	monthlyStat: restSummaryFeed(cursor: null, period: MONTHLY, limit: 1) {\n      __typename\n      restSummaries {\n        __typename\n        ...RestSummaryDetails\n      }\n    }\n  }\n}'
+)
+QUERY_PET_DEVICE_DETAILS = (
+    'query {\n  pet (id: "'
+    + VAR_PET_ID
+    + '") {\n    __typename\n    ...PetProfile\n  }\n}\n'
+)
 
 FRAGMENT_USER_DETAILS = "fragment UserDetails on User {\n  __typename\n   id\n  email\n  firstName\n  lastName\n  phoneNumber\n  fiNewsNotificationsEnabled\n  chipReseller {\n    __typename\n    id\n  }\n}\n"
 FRAGMENT_USER_FULL_DETAILS = "fragment UserFullDetails on User {\n  __typename\n  ...UserDetails\n  userHouseholds {\n    __typename\n    household {\n      __typename\n      pets {\n        __typename\n        ...PetProfile\n      }\n      bases {\n        __typename\n        ...BaseDetails\n      }\n    }\n  }\n}\n"
